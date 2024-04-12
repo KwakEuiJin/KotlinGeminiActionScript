@@ -1,0 +1,25 @@
+name: Kotlin Script CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-kotlin-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+      - name: Download Kotlin compiler
+        run: |
+          curl -s https://api.github.com/repos/JetBrains/kotlin/releases/latest | grep "browser_download_url.*kotlin-compiler.*zip" | cut -d '"' -f 4 | wget -qi -
+          unzip -o kotlin-compiler-*.zip
+      - name: Run Kotlin script
+        run: ./kotlinc/bin/kotlin -script GeminKotlinAction.kts
