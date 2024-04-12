@@ -22,6 +22,6 @@ jobs:
           curl -s https://api.github.com/repos/JetBrains/kotlin/releases/latest | grep "browser_download_url.*kotlin-compiler.*zip" | cut -d '"' -f 4 | wget -qi -
           unzip -o kotlin-compiler-*.zip
       - name: Run Kotlin script
-        run: ./kotlinc/bin/kotlinc -script ${GITHUB_WORKSPACE}GeminKotlinAction.kts
+        run: ./kotlinc/bin/kotlinc -script src/main/kotlin/GeminKotlinAction.kts
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.10-7/x64
