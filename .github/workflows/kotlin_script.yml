@@ -15,11 +15,13 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
       - name: Download Kotlin compiler
         run: |
           curl -s https://api.github.com/repos/JetBrains/kotlin/releases/latest | grep "browser_download_url.*kotlin-compiler.*zip" | cut -d '"' -f 4 | wget -qi -
           unzip -o kotlin-compiler-*.zip
       - name: Run Kotlin script
-        run: ./kotlinc/bin/kotlin -script GeminKotlinAction.kts
+        run: ./kotlinc/bin/kotlinc -script src/main/kotlin/GeminKotlinAction.kts
+        env:
+          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.10-7/x64
